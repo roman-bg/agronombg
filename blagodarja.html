@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Запитването ви е изпратено успешно. Инж. Агроном Роман Рачков ще се свърже с вас в рамките на работния ден.">
+<meta name="author" content="Инж. Агроном Роман Рачков">
+<link rel="canonical" href="https://agronom.sbs/blagodarim.html">
+
+<title>Успешно изпратено запитване | Инж. Агроном Роман Рачков</title>
+
+<!-- Open Graph за социални мрежи -->
+<meta property="og:title" content="Запитване изпратено успешно">
+<meta property="og:description" content="Благодарим за интереса! Инж. Агроном Роман Рачков ще се свърже с вас скоро.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agronom.sbs/blagodarim.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-950:#06180d;
+  --green-900:#0b2a15;
+  --green-800:#14532d;
+  --green-700:#166534;
+  --green-600:#2e7d32;
+  --green-500:#43a047;
+  --green-200:#bbf7d0;
+  --green-100:#dcfce7;
+  --green-50:#f0fdf4;
+  --lime:#a3e635;
+  --ink:#0b1220;
+  --body:#475569;
+  --muted:#8a99ad;
+  --line:#e4eae4;
+  --surface:#ffffff;
+  --bg:#f5f8f5;
+  --radius-xl:28px;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --shadow-sm:0 1px 2px rgba(11,18,32,.05);
+  --shadow-md:0 10px 30px -12px rgba(11,18,32,.18);
+  --shadow-lg:0 30px 60px -25px rgba(6,24,13,.45);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  color:var(--body);
+  background:
+    radial-gradient(900px 520px at 88% -12%, rgba(67,160,71,.35) 0%, transparent 62%),
+    radial-gradient(700px 480px at 4% 105%, rgba(163,230,53,.10) 0%, transparent 60%),
+    linear-gradient(158deg,#06180d 0%,#0b2a15 42%,#14532d 100%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  font-size:16.5px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* subtle grid overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 20%,#000 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 20%,#000 20%,transparent 78%);
+  pointer-events:none;
+  z-index:0;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  width:520px;height:520px;
+  right:-160px;top:-140px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(163,230,53,.18),transparent 68%);
+  filter:blur(20px);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== BRAND ===== */
+.brand{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  color:#fff;
+  font-weight:700;
+  letter-spacing:-.02em;
+  margin-bottom:36px;
+  text-decoration:none;
+}
+.brand-mark{
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  background:linear-gradient(145deg,var(--green-500),var(--green-700));
+  box-shadow:0 6px 18px -6px rgba(67,160,71,.9), inset 0 1px 0 rgba(255,255,255,.25);
+  flex:none;
+}
+.brand-mark svg{width:23px;height:23px;stroke:#fff;}
+.brand-text{display:flex;flex-direction:column;line-height:1.15;}
+.brand-text strong{font-size:1rem;font-weight:700;}
+.brand-text span{font-size:.72rem;font-weight:500;color:#9fd3a4;letter-spacing:.06em;text-transform:uppercase;}
+
+/* ===== CARD ===== */
+.thank-you-card{
+  position:relative;
+  z-index:2;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-xl);
+  padding:52px 44px 46px;
+  box-shadow:var(--shadow-lg);
+  text-align:center;
+  max-width:540px;
+  width:100%;
+  overflow:hidden;
+}
+.thank-you-card::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto 0;
+  height:5px;
+  background:linear-gradient(90deg,var(--green-500),var(--lime));
+}
+
+/* success icon */
+.success-icon{
+  width:82px;height:82px;
+  margin:0 auto 26px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:linear-gradient(145deg,var(--green-50),var(--green-100));
+  border:1px solid #cdeccf;
+  color:var(--green-700);
+  box-shadow:0 12px 30px -14px rgba(67,160,71,.7);
+  animation:pop .6s var(--ease) both;
+}
+@keyframes pop{
+  0%{transform:scale(.7);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+.success-icon svg{
+  width:42px;height:42px;
+  stroke:var(--green-700);
+  stroke-width:2.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  fill:none;
+}
+
+.thank-you-card h1{
+  font-size:clamp(1.6rem,3.2vw,2rem);
+  font-weight:800;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  line-height:1.2;
+  margin-bottom:14px;
+}
+
+.thank-you-card p{
+  color:var(--body);
+  font-size:1.02rem;
+  max-width:42ch;
+  margin:0 auto 30px;
+}
+
+/* divider */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--line),transparent);
+  margin:0 auto 28px;
+  max-width:280px;
+}
+
+/* details chip */
+.info-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font-size:.85rem;
+  font-weight:500;
+  color:var(--green-700);
+  background:var(--green-50);
+  border:1px solid #d6ecda;
+  padding:9px 16px;
+  border-radius:999px;
+  margin-bottom:30px;
+}
+.info-chip svg{width:16px;height:16px;stroke:var(--green-600);flex:none;}
+
+/* button */
+.btn-back{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  background:linear-gradient(135deg,var(--green-600),var(--green-800));
+  color:#fff;
+  padding:17px 26px;
+  font-size:1rem;
+  font-weight:700;
+  border:none;
+  border-radius:var(--radius-md);
+  cursor:pointer;
+  text-decoration:none;
+  transition:transform .22s var(--ease), box-shadow .22s var(--ease), background .22s;
+  box-shadow:0 16px 34px -16px rgba(20,83,45,.9);
+  font-family:inherit;
+  letter-spacing:-.01em;
+}
+.btn-back:hover{
+  transform:translateY(-2px);
+  box-shadow:0 22px 44px -16px rgba(20,83,45,1);
+  background:linear-gradient(135deg,var(--green-700),var(--green-900));
+}
+.btn-back svg{
+  width:18px;height:18px;
+  transition:transform .25s var(--ease);
+}
+.btn-back:hover svg{
+  transform:translateX(3px);
+}
+
+/* footer note */
+.footer-note{
+  position:relative;
+  z-index:2;
+  margin-top:34px;
+  font-size:.8rem;
+  color:#8fae95;
+  text-align:center;
+  max-width:420px;
+}
+.footer-note a{
+  color:#c9dfcc;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  transition:color .2s;
+}
+.footer-note a:hover{color:#fff;}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:600px){
+  body{font-size:16px;padding:18px;}
+  .brand{margin-bottom:26px;}
+  .brand-mark{width:38px;height:38px;border-radius:11px;}
+  .brand-mark svg{width:21px;height:21px;}
+  .thank-you-card{padding:38px 24px 34px;border-radius:22px;}
+  .success-icon{width:70px;height:70px;margin-bottom:22px;}
+  .success-icon svg{width:36px;height:36px;}
+  .thank-you-card p{font-size:.98rem;margin-bottom:26px;}
+  .info-chip{margin-bottom:24px;font-size:.82rem;}
+  .btn-back{padding:15px 22px;font-size:.96rem;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+  <!-- ===== BRAND ===== -->
+  <a href="index.html" class="brand" aria-label="Назад към началната страница">
+    <span class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21c0-6 3-10 9-11 0 7-4 11-9 11Z"/>
+        <path d="M12 21C7 21 3 17 3 10c6 1 9 5 9 11Z"/>
+        <path d="M12 21v-4"/>
+      </svg>
+    </span>
+    <span class="brand-text">
+      <strong>Инж. Агроном</strong>
+      <span>ЗЗР &amp; БАБХ</span>
+    </span>
+  </a>
+
+  <!-- ===== THANK YOU CARD ===== -->
+  <main class="thank-you-card" role="main">
+
+    <div class="success-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+    </div>
+
+    <h1>Благодаря ви!</h1>
+
+    <p>
+      Запитването ви е изпратено успешно. Инж. Агроном Роман Рачков ще се свърже с вас възможно най-скоро,
+      за да обсъдим електронния дневник на вашето стопанство.
+    </p>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <span class="info-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3 3"/>
+      </svg>
+      Отговор в рамките на работния ден
+    </span>
+
+    <a href="index.html" class="btn-back">
+      Назад към началната страница
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </a>
+
+  </main>
+
+  <!-- ===== FOOTER NOTE ===== -->
+
+<p class="footer-note">
+  Ако имате спешен въпрос, можете да се свържете директно на
+  <a href="tel:+359888785019">0888 785 019</a>.
+  <br>
+  Сертификат № 04-0015/15.04.2015 г. | БАБХ
+  <br>
+  &copy; 2026 Инж. Агроном Роман Рачков. Всички права запазени.
+</p>
+
+</body>
+</html>
