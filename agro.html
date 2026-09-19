@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Агро Аптека — Бърз справочник</title>
+<style>
+  :root{
+    --green:#2f7d32;
+    --green-dark:#1b5e20;
+    --green-light:#e8f5e9;
+    --bg:#f4f6f4;
+    --card:#ffffff;
+    --text:#1f2a24;
+    --muted:#6b7a70;
+    --border:#dfe6e0;
+    --amber:#b26a00;
+    --amber-bg:#fff4e0;
+    --purple:#5b2fa8;
+    --purple-bg:#f0e9fd;
+    --purple-light:#e0d3fb;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- Header ---------- */
+  .hero{
+    background:linear-gradient(135deg,var(--green-dark),var(--green));
+    color:#fff;
+    margin:0 -16px 0;
+    padding:28px 24px 26px;
+    border-radius:0 0 18px 18px;
+    box-shadow:0 4px 16px rgba(0,0,0,.12);
+  }
+  .hero h1{margin:0 0 4px;font-size:1.6rem;letter-spacing:.3px}
+  .hero p{margin:0;opacity:.9;font-size:.92rem}
+
+  /* ---------- Controls ---------- */
+  .controls{
+    position:sticky;top:0;z-index:30;
+    background:rgba(244,246,244,.94);
+    backdrop-filter:blur(8px);
+    padding:14px 0 10px;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--border);
+  }
+
+  /* Две падащи менюта */
+  .select-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  @media (max-width:640px){
+    .select-row{grid-template-columns:1fr}
+  }
+
+  .select-wrap{position:relative}
+  .select-wrap::before{
+    content:"";
+    position:absolute;
+    left:14px;top:50%;transform:translateY(-50%);
+    width:4px;height:22px;border-radius:2px;
+    background:var(--green);
+    pointer-events:none;
+  }
+  .select-wrap.disease::before{background:var(--purple)}
+
+  select{
+    width:100%;
+    padding:12px 42px 12px 26px;
+    font-size:.95rem;
+    font-family:inherit;
+    font-weight:600;
+    color:var(--text);
+    border:2px solid var(--border);
+    border-radius:12px;
+    background:#fff;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7a70' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    appearance:none;
+    -webkit-appearance:none;
+    cursor:pointer;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+    text-overflow:ellipsis;
+  }
+  select:hover{border-color:#c8d2cb}
+  select:focus{
+    border-color:var(--green);
+    box-shadow:0 0 0 4px rgba(47,125,50,.12);
+  }
+  .select-wrap.disease select:focus{
+    border-color:var(--purple);
+    box-shadow:0 0 0 4px rgba(91,47,168,.12);
+  }
+  select option{padding:6px}
+
+  /* Търсене */
+  .search-row{display:flex;gap:8px;align-items:center}
+  .search-box{position:relative;flex:1}
+  .search-icon{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    font-size:1rem;color:#9aa8a0;pointer-events:none;
+  }
+  #search{
+    width:100%;
+    padding:12px 16px 12px 42px;
+    font-size:.95rem;
+    border:2px solid var(--border);
+    border-radius:12px;
+    background:#fff;
+    color:var(--text);
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+    font-family:inherit;
+  }
+  #search:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(47,125,50,.12)}
+  #search::placeholder{color:#9aa8a0}
+
+  .btn-ghost{
+    width:44px;height:44px;flex:0 0 44px;
+    border:2px solid var(--border);background:#fff;border-radius:12px;
+    cursor:pointer;font-size:1rem;color:var(--muted);
+    transition:.15s;
+  }
+  .btn-ghost:hover{background:#f0f0f0;color:var(--text)}
+
+  .meta{margin-top:10px;font-size:.83rem;color:var(--muted)}
+  .meta b{color:var(--green-dark)}
+  .meta .hint{margin-left:8px}
+  kbd{
+    background:#fff;border:1px solid var(--border);border-bottom-width:2px;
+    border-radius:5px;padding:1px 5px;font-size:.75rem;font-family:inherit;
+  }
+
+  /* ---------- Grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+    gap:14px;
+    min-height:200px;
+  }
+  @media (max-width:420px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:5px solid var(--green);
+    border-radius:12px;
+    padding:14px 16px 12px;
+    box-shadow:0 1px 3px rgba(0,0,0,.05);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.09)}
+  .card.disease{border-left-color:var(--purple)}
+
+  .card-top{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:8px;margin-bottom:6px;
+  }
+  .type-tag{
+    font-size:.72rem;font-weight:700;letter-spacing:.4px;
+    text-transform:uppercase;color:var(--green-dark);
+    background:var(--green-light);padding:3px 8px;border-radius:20px;
+  }
+  .card.disease .type-tag{color:var(--purple);background:var(--purple-bg)}
+  .eppo{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.74rem;color:var(--muted);
+    background:#f2f5f2;border:1px solid var(--border);
+    padding:2px 7px;border-radius:6px;white-space:nowrap;
+  }
+  .card h2{
+    margin:0 0 10px;
+    font-size:1.02rem;line-height:1.35;font-weight:700;
+  }
+
+  .preps-label{
+    font-size:.72rem;font-weight:700;letter-spacing:.4px;
+    text-transform:uppercase;color:var(--muted);
+    margin:0 0 6px;
+  }
+  .preps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .prep{
+    background:#f8faf8;
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:8px 10px;
+  }
+  .prep-name{font-weight:700;font-size:.93rem;color:var(--green-dark)}
+  .prep-meta{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;
+    font-size:.78rem;
+  }
+  .dose{
+    background:#eef4ee;color:#33513a;
+    padding:2px 8px;border-radius:6px;border:1px solid #dbe7dc;
+  }
+  .quar{
+    background:var(--amber-bg);color:var(--amber);
+    padding:2px 8px;border-radius:6px;border:1px solid #f2ddb8;
+    font-weight:600;
+  }
+  .quar.unknown{
+    background:#f3f4f3;color:var(--muted);border-color:var(--border);font-weight:500;
+  }
+
+  mark{background:#ffe98a;color:inherit;border-radius:3px;padding:0 1px}
+
+  /* ---------- State screens ---------- */
+  .state{
+    grid-column:1/-1;text-align:center;padding:56px 20px;color:var(--muted);
+  }
+  .state .icon{font-size:2.6rem;display:block;margin-bottom:12px;line-height:1}
+  .state h3{margin:0 0 8px;color:var(--text);font-size:1.1rem;font-weight:700}
+  .state p{margin:0 auto;max-width:520px;font-size:.92rem;line-height:1.6}
+  .state code{
+    background:#fff;border:1px solid var(--border);border-radius:6px;
+    padding:2px 7px;font-size:.85rem;
+  }
+  .state .examples{
+    margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  }
+  .state .examples button{
+    background:#fff;border:1px solid var(--border);
+    padding:8px 14px;border-radius:20px;font-size:.85rem;
+    color:var(--green-dark);cursor:pointer;font-weight:600;
+    transition:.15s;
+  }
+  .state .examples button:hover{background:var(--green-light);border-color:var(--green)}
+  .state .examples button.disease{color:var(--purple)}
+  .state .examples button.disease:hover{background:var(--purple-light);border-color:var(--purple)}
+
+  footer{
+    text-align:center;color:var(--muted);font-size:.78rem;
+    padding:26px 16px 0;line-height:1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>🌿 Агро Аптека</h1>
+    <p>Изберете <b>вредител</b> или <b>болест</b> от менютата, за да видите утвърдените препарати с дози и карантина</p>
+  </header>
+
+  <div class="controls">
+    <div class="select-row">
+      <div class="select-wrap">
+        <select id="pestSelect" aria-label="Избор на вредител">
+          <option value="">🐛 Вредител…</option>
+        </select>
+      </div>
+      <div class="select-wrap disease">
+        <select id="diseaseSelect" aria-label="Избор на болест">
+          <option value="">🍄 Болест…</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input id="search" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Допълнително търсене (препарат, доза, EPPO код)…">
+      </div>
+      <button id="clear" class="btn-ghost" title="Изчисти всичко">✕</button>
+    </div>
+
+    <div class="meta">
+      <span id="metaText">Изберете от менютата или въведете текст за търсене.</span>
+      <span class="hint">· <kbd>/</kbd> фокус · <kbd>Esc</kbd> изчисти</span>
+    </div>
+  </div>
+
+  <main id="results" class="grid"></main>
+
+  <footer>
+    Данните се зареждат от <code>agroapteka.json</code>.<br>
+    Информацията е с справочен характер — винаги проверявайте актуалната регистрация и карантинните срокове.
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Състояние
+   ============================================================ */
+const state = {
+  q: '',
+  pest: '',      // '' | 'all' | конкретен EPPO код
+  disease: '',   // '' | 'all' | конкретен EPPO код
+  items: [],
+  loaded: false,
+  error: null
+};
+
+/* ============================================================
+   DOM
+   ============================================================ */
+const resultsEl   = document.getElementById('results');
+const searchEl    = document.getElementById('search');
+const clearBtn    = document.getElementById('clear');
+const metaText    = document.getElementById('metaText');
+const pestSelect  = document.getElementById('pestSelect');
+const diseaseSelect = document.getElementById('diseaseSelect');
+
+/* ============================================================
+   Помощни функции
+   ============================================================ */
+function esc(s){
+  return String(s ?? '').replace(/[&<>"]/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function escapeRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+function hl(text, q){
+  const raw = String(text ?? '');
+  const tokens = (q || '').toLowerCase().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return esc(raw);
+  const re = new RegExp(tokens.map(escapeRe).join('|'), 'gi');
+  let out = '', last = 0, m;
+  while ((m = re.exec(raw)) !== null){
+    if (m[0].length === 0){ re.lastIndex++; continue; }
+    out += esc(raw.slice(last, m.index)) + '<mark>' + esc(m[0]) + '</mark>';
+    last = m.index + m[0].length;
+  }
+  out += esc(raw.slice(last));
+  return out;
+}
+
+function isUnknown(v){
+  return !v || /не е (указан|посочена)/i.test(v);
+}
+
+/* ============================================================
+   Зареждане на JSON
+   ============================================================ */
+async function loadData(){
+  if (location.protocol === 'file:'){
+    state.error = 'file-protocol';
+    return;
+  }
+  try {
+    const res = await fetch('agroapteka.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    const out = [];
+    (data.pests    || []).forEach(p => out.push({ ...p, type:'pest',    typeLabel:'Вредител' }));
+    (data.diseases || []).forEach(d => out.push({ ...d, type:'disease', typeLabel:'Болест' }));
+
+    out.sort((a,b) => a.name.localeCompare(b.name, 'bg'));
+    state.items = out;
+    state.loaded = true;
+
+    buildDropdowns();
+  } catch (err){
+    state.error = err.message || 'Грешка при зареждане';
+  }
+}
+
+/* ============================================================
+   Падащи менюта — вредители и болести
+   ============================================================ */
+function buildDropdowns(){
+  const pests = state.items
+    .filter(it => it.type === 'pest')
+    .sort((a,b) => a.name.localeCompare(b.name, 'bg'));
+
+  const diseases = state.items
+    .filter(it => it.type === 'disease')
+    .sort((a,b) => a.name.localeCompare(b.name, 'bg'));
+
+  pestSelect.innerHTML = `
+    <option value="">🐛 Изберете вредител…</option>
+    <option value="all">📋 Всички вредители (${pests.length})</option>
+    ${pests.map(p => `<option value="${esc(p.eppo)}">${esc(p.name)}</option>`).join('')}
+  `;
+
+  diseaseSelect.innerHTML = `
+    <option value="">🍄 Изберете болест…</option>
+    <option value="all">📋 Всички болести (${diseases.length})</option>
+    ${diseases.map(d => `<option value="${esc(d.eppo)}">${esc(d.name)}</option>`).join('')}
+  `;
+}
+
+/* ============================================================
+   Дали има намерение за търсене
+   ============================================================ */
+function hasSearchIntent(){
+  return state.q.trim().length >= 1
+      || state.pest !== ''
+      || state.disease !== '';
+}
+
+/* ============================================================
+   Филтриране
+   ============================================================ */
+function filterItems(){
+  const q = state.q.trim().toLowerCase();
+  const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+
+  // 1) Основен филтър по избор от падащите менюта
+  let pool;
+  if (state.pest !== '' && state.pest !== 'all'){
+    pool = state.items.filter(it => it.type === 'pest' && it.eppo === state.pest);
+  } else if (state.disease !== '' && state.disease !== 'all'){
+    pool = state.items.filter(it => it.type === 'disease' && it.eppo === state.disease);
+  } else if (state.pest === 'all'){
+    pool = state.items.filter(it => it.type === 'pest');
+  } else if (state.disease === 'all'){
+    pool = state.items.filter(it => it.type === 'disease');
+  } else {
+    pool = state.items;
+  }
+
+  // 2) Допълнителен текстов филтър
+  if (!tokens.length) return pool;
+
+  return pool.filter(it => {
+    const hay = [
+      it.eppo, it.name, it.typeLabel,
+      ...it.preparations.flatMap(p => [p.name, p.dose || '', p.quarantine || ''])
+    ].join(' ').toLowerCase();
+    return tokens.every(t => hay.includes(t));
+  });
+}
+
+/* ============================================================
+   Рендиране
+   ============================================================ */
+function cardHTML(it){
+  const q = state.q.trim();
+
+  const preps = it.preparations.map(p => `
+    <li class="prep">
+      <div class="prep-name">${hl(p.name, q)}</div>
+      <div class="prep-meta">
+        ${p.dose ? `<span class="dose">${hl(p.dose, q)}</span>` : ''}
+        <span class="quar ${isUnknown(p.quarantine) ? 'unknown' : ''}">
+          Карантина: ${hl(p.quarantine || 'не е указана', q)}
+        </span>
+      </div>
+    </li>`).join('');
+
+  return `
+    <article class="card ${it.type}" data-eppo="${esc(it.eppo)}">
+      <div class="card-top">
+        <span class="type-tag">${it.type === 'pest' ? '🐛 Вредител' : '🍄 Болест'}</span>
+        <span class="eppo">${hl(it.eppo, q)}</span>
+      </div>
+      <h2>${hl(it.name, q)}</h2>
+      <p class="preps-label">Утвърдени препарати:</p>
+      <ul class="preps">${preps}</ul>
+    </article>`;
+}
+
+function renderIdle(){
+  resultsEl.innerHTML = `
+    <div class="state">
+      <span class="icon">🌱</span>
+      <h3>Изберете вредител или болест</h3>
+      <p>Използвайте падащите менюта по-горе, за да изберете конкретен вредител или болест. Можете и директно да въведете текст за търсене.</p>
+      <div class="examples">
+        <button data-pest="LEPTDE">🐛 Колорадски бръмбар</button>
+        <button data-pest="1APHIF">🐛 Листни въшки</button>
+        <button data-pest="LOBEBO">🐛 Гроздови молци</button>
+        <button data-disease="1ERYSF" class="disease">🍄 Брашнеста мана</button>
+        <button data-disease="1PEROF" class="disease">🍄 Мана</button>
+        <button data-disease="VENTIN" class="disease">🍄 Струпясване</button>
+      </div>
+    </div>`;
+}
+
+function renderLoading(){
+  resultsEl.innerHTML = `
+    <div class="state">
+      <span class="icon">⏳</span>
+      <h3>Зареждане…</h3>
+      <p>Изтегляне на <code>agroapteka.json</code></p>
+    </div>`;
+}
+
+function renderError(){
+  if (state.error === 'file-protocol'){
+    resultsEl.innerHTML = `
+      <div class="state">
+        <span class="icon">⚠️</span>
+        <h3>Страницата не може да зареди данните</h3>
+        <p>Отворена е директно като файл (<code>file://</code>). Браузърите блокират <code>fetch()</code> към локални файлове.</p>
+        <p style="margin-top:12px">Стартирайте локален сървър в папката с файловете:</p>
+        <p style="margin-top:10px">
+          <code>python -m http.server 8000</code><br>
+          <span style="display:inline-block;margin-top:6px">после отворете</span>
+          <code>http://localhost:8000</code>
+        </p>
+      </div>`;
+  } else {
+    resultsEl.innerHTML = `
+      <div class="state">
+        <span class="icon">❌</span>
+        <h3>Грешка при зареждане на данните</h3>
+        <p>${esc(state.error || 'Неизвестна грешка')}</p>
+        <p style="margin-top:10px">Проверете дали <code>agroapteka.json</code> е в същата папка и е валиден JSON.</p>
+      </div>`;
+  }
+}
+
+function render(){
+  if (state.error)   return renderError();
+  if (!state.loaded) return renderLoading();
+  if (!hasSearchIntent()) return renderIdle();
+
+  const items = filterItems();
+
+  // Мета текст — контекстуален
+  if (items.length === 1){
+    const it = items[0];
+    metaText.innerHTML = `Показан <b>1</b> запис — <b>${esc(it.name)}</b>`;
+  } else {
+    metaText.innerHTML = `Показани <b>${items.length}</b> записа от общо <b>${state.items.length}</b>`;
+  }
+
+  if (!items.length){
+    resultsEl.innerHTML = `
+      <div class="state">
+        <span class="icon">🔍</span>
+        <h3>Няма намерени резултати</h3>
+        <p>Опитайте с друг вредител, болест или препарат.</p>
+      </div>`;
+    return;
+  }
+
+  resultsEl.innerHTML = items.map(cardHTML).join('');
+}
+
+/* ============================================================
+   Събития
+   ============================================================ */
+let debounce;
+searchEl.addEventListener('input', e => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    state.q = e.target.value;
+    render();
+  }, 120);
+});
+
+// Избор на вредител — изчиства избора на болест
+pestSelect.addEventListener('change', () => {
+  state.pest = pestSelect.value;
+  if (state.pest !== ''){
+    state.disease = '';
+    diseaseSelect.value = '';
+  }
+  render();
+});
+
+// Избор на болест — изчиства избора на вредител
+diseaseSelect.addEventListener('change', () => {
+  state.disease = diseaseSelect.value;
+  if (state.disease !== ''){
+    state.pest = '';
+    pestSelect.value = '';
+  }
+  render();
+});
+
+clearBtn.addEventListener('click', () => {
+  searchEl.value = '';
+  state.q = '';
+  state.pest = '';
+  state.disease = '';
+  pestSelect.value = '';
+  diseaseSelect.value = '';
+  searchEl.focus();
+  render();
+});
+
+// Примери от idle екрана
+resultsEl.addEventListener('click', e => {
+  const pestBtn = e.target.closest('button[data-pest]');
+  if (pestBtn){
+    state.pest = pestBtn.dataset.pest;
+    state.disease = '';
+    pestSelect.value = state.pest;
+    diseaseSelect.value = '';
+    render();
+    return;
+  }
+  const disBtn = e.target.closest('button[data-disease]');
+  if (disBtn){
+    state.disease = disBtn.dataset.disease;
+    state.pest = '';
+    diseaseSelect.value = state.disease;
+    pestSelect.value = '';
+    render();
+  }
+});
+
+// Клавиатурни преки пътища
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== searchEl){
+    e.preventDefault();
+    searchEl.focus();
+    searchEl.select();
+  }
+  if (e.key === 'Escape' && document.activeElement === searchEl){
+    searchEl.value = '';
+    state.q = '';
+    render();
+  }
+});
+
+/* ============================================================
+   Стартиране
+   ============================================================ */
+renderLoading();
+loadData().then(render);
+</script>
+</body>
+</html>
