@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beauveria bassiana - Flipbook</title>
+
+  <!-- 1. Зареждане на CSS стиловете на FlipbookEngine -->
+  <link rel="stylesheet" href="https://unpkg.com/flipbookengine@0.5.0/dist/flipbook-engine.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      background-color: #f5f5f5;
+      font-family: sans-serif;
+    }
+    #viewer {
+      width: 100%;
+      max-width: 1200px;
+      height: 80vh;
+      min-height: 500px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Контейнер за Flipbook -->
+  <div id="viewer"></div>
+
+  <!-- 2. Конфигурация на Import Map за PDF.js -->
+  <script type="importmap">
+  {
+    "imports": {
+      "pdfjs-dist": "https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.min.mjs"
+    }
+  }
+  </script>
+
+  <!-- 3. Инициализация на FlipbookEngine -->
+  <script type="module">
+    import { FlipbookEngine } from 'https://unpkg.com/flipbookengine@0.5.0/dist/flipbook-engine.js';
+
+    const engine = new FlipbookEngine('#viewer', {
+      // Ключова конфигурация: адрес на PDF.js Worker
+      pdfWorkerSrc: 'https://unpkg.com/pdfjs-dist@5.4.530/build/pdf.worker.min.mjs',
+
+      // Разрешаване на изтегляне
+      allowDownload: true,
+
+      // Показване на миниатюри (по избор)
+      showThumbs: true,
+
+      // Тема: auto следва системата, може да се зададе 'light' или 'dark'
+      theme: 'auto',
+
+      // Основен цвят
+      primaryColor: '#4a6fa5'
+    });
+
+    // Стартиране и зареждане на PDF файла
+    // Заменете с вашия реален път
+    engine.init('./Beauveriabassiana.pdf');
+  </script>
+
+</body>
+</html>
