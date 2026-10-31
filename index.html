@@ -56,12 +56,12 @@
     .contact-card {
       display: grid; gap: 8px; grid-template-columns: 1fr;
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
-      padding: 18px; margin: -1px 0 20px; box-shadow: 0 5px 20px rgba(25,60,40,.05);
+      padding: 22px 18px; margin: -1px 0 20px; box-shadow: 0 5px 20px rgba(25,60,40,.05);
+      text-align: center;
     }
     .contact-name { font-weight: 800; font-size: 1.08rem; }
     .contact-role { color: var(--muted); font-size: .94rem; }
-    .contact-links { display: flex; flex-wrap: wrap; gap: 10px 16px; }
-    .contact-links a { font-weight: 650; text-decoration-thickness: 1px; }
+    .contact-certs { color: var(--muted); font-size: .84rem; line-height: 1.5; }
     .intro {
       background: var(--green-soft); border-left: 4px solid var(--green);
       border-radius: 0 12px 12px 0; padding: 16px 18px; margin-bottom: 22px;
@@ -100,7 +100,6 @@
       content: ""; position: absolute; left: 14px; top: 32px; bottom: 0;
       border-left: 1px solid #bfd3c4;
     }
-    .signoff { font-weight: 650; }
     footer { color: var(--muted); font-size: .82rem; padding: 0 0 28px; }
     .footline { border-top: 1px solid var(--line); padding-top: 14px; }
     .toc { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 20px; }
@@ -118,18 +117,41 @@
       outline: 3px solid #d2a72c; outline-offset: 3px;
     }
     .back-to-menu:hover { background: #dcebe0; }
+
+    .contact-form { display: grid; gap: 12px; }
+    .contact-form label { display: block; font-weight: 700; font-size: .95rem; margin-bottom: 4px; color: var(--green-dark); }
+    .contact-form input, .contact-form textarea, .contact-form select {
+      width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px;
+      font-family: inherit; font-size: 1rem; color: var(--ink); background: #fbfdfb;
+    }
+    .contact-form textarea { min-height: 110px; resize: vertical; }
+    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
+      outline: 2px solid var(--green); outline-offset: 1px; border-color: var(--green);
+    }
+    .contact-form button {
+      justify-self: start; padding: 12px 22px; border: none; border-radius: 10px;
+      background: var(--green); color: white; font-weight: 800; font-size: 1rem;
+      cursor: pointer; min-height: 46px;
+    }
+    .contact-form button:hover { background: var(--green-dark); }
+    .contact-form button:focus-visible { outline: 3px solid #d2a72c; outline-offset: 3px; }
+    .contact-form .form-note { font-size: .84rem; color: var(--muted); }
+    .form-contact-links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 14px; }
+    .form-contact-links a { font-weight: 650; }
+
     @media (min-width: 600px) {
       .hero { padding: 42px 0 38px; }
       main { padding-top: 26px; }
-      .contact-card { grid-template-columns: 1fr auto; align-items: center; }
-      .contact-links { justify-content: flex-end; align-items: center; }
+      .contact-card { padding: 26px 28px; }
       section { padding: 25px 28px; }
       .price-list { grid-template-columns: 1fr 1fr; }
+      .contact-form { grid-template-columns: 1fr 1fr; }
+      .contact-form .full { grid-column: 1 / -1; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     @media print {
       body { background: white; font-size: 11pt; }
-      .topbar, .toc { display: none; }
+      .topbar, .toc, .contact-form, .form-contact-links { display: none; }
       .hero { background: white; color: var(--ink); padding: 0 0 16px; }
       .subtitle { color: var(--muted); }
       main, footer, .hero-inner, .topbar-inner { width: 100%; }
@@ -155,13 +177,11 @@
 
   <main>
     <div class="contact-card">
-      <div>
-        <div class="contact-name">Роман Рачков</div>
-        <div class="contact-role">Агроном · консултант по интегрирано управление на вредители</div>
-      </div>
-      <div class="contact-links">
-        <a href="tel:+359888785019">0888 785 019</a>
-        <a href="mailto:bioprotection@proton.me">bioprotection@proton.me</a>
+      <div class="contact-name">Роман Рачков</div>
+      <div class="contact-role">Агроном · консултант по интегрирано управление на вредители</div>
+      <div class="contact-certs">
+        Сертификат № 04-0015/15.04.2015 г. (чл. 83 от ЗЗР)<br>
+        Регистър на БАБХ, консултант по ИУВ № 140/02.04.2018 г.
       </div>
     </div>
 
@@ -171,6 +191,7 @@
       <a href="#service">Как работим</a>
       <a href="#prices">Цени</a>
       <a href="#preparation">Подготовка</a>
+      <a href="#contact">Контакт</a>
     </nav>
 
     <div class="intro">
@@ -262,9 +283,43 @@
       <a class="back-to-menu" href="#menu" aria-label="Връщане към менюто">↑ Към менюто</a>
     </section>
 
-    <section>
-      <p class="signoff">С уважение,<br>Роман Рачков, агроном</p>
-      <p>Сертификат № 04-0015/15.04.2015 г. (чл. 83 от ЗЗР)<br>Регистър на БАБХ, консултант по ИУВ № 140/02.04.2018 г.</p>
+    <section id="contact">
+      <h2>Контакт и запитване</h2>
+      <p>Изпратете запитване през формата по-долу или се свържете директно по телефон или имейл.</p>
+      <form class="contact-form" action="https://formsubmit.co/roman.rachkov@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Запитване от сайта за дигитален дневник за ПРЗ">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <div class="full">
+          <label for="name">Име и фамилия</label>
+          <input id="name" name="name" type="text" required autocomplete="name">
+        </div>
+        <div>
+          <label for="email">Имейл</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+        </div>
+        <div>
+          <label for="phone">Телефон</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div class="full">
+          <label for="farm">Стопанство / брой парцели</label>
+          <input id="farm" name="farm" type="text" placeholder="Напр. 8 парцела, лозя и овошки">
+        </div>
+        <div class="full">
+          <label for="message">Запитване</label>
+          <textarea id="message" name="message" required placeholder="Опишете накратко какво ви е нужно."></textarea>
+        </div>
+        <div class="full">
+          <button type="submit">Изпрати запитване</button>
+          <p class="form-note">С изпращането се съгласявате данните ви да бъдат използвани само за отговор на запитването.</p>
+        </div>
+      </form>
+      <div class="form-contact-links">
+        <a href="tel:+359888785019">0888 785 019</a>
+        <a href="mailto:bioprotection@proton.me">bioprotection@proton.me</a>
+      </div>
+      <a class="back-to-menu" href="#menu" aria-label="Връщане към менюто">↑ Към менюто</a>
     </section>
   </main>
 
